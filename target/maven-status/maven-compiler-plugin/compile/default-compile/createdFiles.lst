@@ -1,1 +1,6 @@
-BDNC/BDNC.class
+DAPP02Practica01/Venta.class
+DAPP02Practica01/DAOVenta.class
+DAPP02Practica01/IDAO.class
+DAPP02Practica01/Main.class
+DAPP02Practica01/DetalleVenta.class
+DAPP02Practica01/HibernateUtil.class
