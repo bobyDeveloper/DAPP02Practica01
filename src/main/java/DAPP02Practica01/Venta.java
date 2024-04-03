@@ -29,7 +29,7 @@ public class Venta {
             
     private long id;
     @Column(name = "cliente")
-    private String clienre;
+    private String cliente;
     @Column(name = "fecha")
     private Date fechaventa;
     @Column(name = "total")
@@ -68,12 +68,12 @@ public class Venta {
     }
     
 
-    public String getClienre() {
-        return clienre;
+    public String getCliente() {
+        return cliente;
     }
 
-    public void setClienre(String clienre) {
-        this.clienre = clienre;
+    public void setCliente(String clienre) {
+        this.cliente = cliente;
     }
 
     public Date getFechaventa() {

@@ -35,7 +35,7 @@ public class Main {
         String totalStr = JOptionPane.showInputDialog("Ingrese el Total de la venta:");
         double total = Double.parseDouble(totalStr);
         Venta venta = new Venta();
-        venta.setClienre(cliente);
+        venta.setCliente(cliente);
         venta.setFechaventa(new Date(new java.util.Date().getTime()));
         venta.setTotal(total);
 
@@ -61,26 +61,40 @@ public class Main {
         }
     }
 
-    private static void listarVentas(IDAO<Venta> dao) {
-        List<Venta> ventas = dao.buscarAll();
-        StringBuilder ventasStr = new StringBuilder("Ventas registradas:\n");
-        for (Venta venta : ventas) {
-            ventasStr.append("ID: ").append(venta.getId())
-                    .append(", Cliente: ").append(venta.getClienre())
-                    .append(", Fecha: ").append(venta.getFechaventa().toString())
-                    .append(", Total: $").append(venta.getTotal()).append("\n");
+   private static void listarVentas(IDAO<Venta> dao) {
+    List<Venta> ventas = dao.buscarAll();
+    StringBuilder ventasStr = new StringBuilder("Ventas registradas:\n");
+    for (Venta venta : ventas) {
+        ventasStr.append("\nID Venta: ").append(venta.getId())
+                .append("\nCliente: ").append(venta.getCliente())
+                .append("\nFecha: ").append(venta.getFechaventa().toString())
+                .append("\nTotal: $").append(venta.getTotal()).append("\n");
+
+        // Agregar detalles de cada venta
+        List<DetalleVenta> detalles = venta.getDetalleVenta();
+        if (detalles != null && !detalles.isEmpty()) {
+            ventasStr.append("Detalles:\n");
+            for (DetalleVenta detalle : detalles) {
+                ventasStr.append("  Producto: ").append(detalle.getProducto())
+                        .append(", Cantidad: ").append(detalle.getCantidad())
+                        .append(", Precio: $").append(detalle.getPrecio()).append("\n");
+            }
+        } else {
+            ventasStr.append("  No hay detalles para mostrar.\n");
         }
-        JOptionPane.showMessageDialog(null, ventasStr.toString());
     }
+    JOptionPane.showMessageDialog(null, ventasStr.toString());
+}
+
 
     private static void actualizarVenta(IDAO<Venta> dao) {
         long idVenta = Long.parseLong(JOptionPane.showInputDialog("Ingrese el ID de la venta a actualizar:"));
         Venta venta = dao.buscarById(idVenta);
         if (venta != null) {
-            String nuevoCliente = JOptionPane.showInputDialog("Ingrese el nuevo nombre del Cliente:", venta.getClienre());
+            String nuevoCliente = JOptionPane.showInputDialog("Ingrese el nuevo nombre del Cliente:", venta.getCliente());
             String nuevoTotalStr = JOptionPane.showInputDialog("Ingrese el nuevo Total de la venta:", String.valueOf(venta.getTotal()));
             double nuevoTotal = Double.parseDouble(nuevoTotalStr);
-            venta.setClienre(nuevoCliente);
+            venta.setCliente(nuevoCliente);
             venta.setTotal(nuevoTotal);
 
             boolean resultado = dao.modificar(venta);
